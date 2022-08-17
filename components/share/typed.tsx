@@ -24,7 +24,7 @@ export default function Typed({ text }: any) {
         if (i >= listoftext.length) {
           clearInterval(loop);
         }
-      }, 30);
+      }, 100);
     }
   }, [textref]);
   return (
