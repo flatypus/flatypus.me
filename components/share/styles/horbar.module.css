@@ -1,0 +1,16 @@
+@keyframes example {
+  from {
+    width: 0px;
+  }
+  to {
+    width: 800px;
+  }
+}
+
+.test {
+  width: 800px;
+  height: 2px;
+  background-color: white;
+  animation-name: example;
+  animation-duration: 2s;
+}
