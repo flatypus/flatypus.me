@@ -17,9 +17,8 @@ function Home() {
       <div
         className="
       bg-[#4ba6ca]
-       bg-cover backdrop-blur-lg h-screen"
+       bg-cover backdrop-blur-lg h-screen pt-20"
       >
-        <div className="p-20"></div>
         <HorBar />
         <div className={styles.mainbody}>
           <div className="grid grid-cols-4">

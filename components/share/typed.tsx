@@ -44,7 +44,6 @@ export default function Typed({ text, speed = 20 }: any) {
             right += text[i];
           }
         }
-        console.log(listoftext);
       }
       let i = 0;
       const loop = setInterval(() => {
