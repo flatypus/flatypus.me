@@ -7,7 +7,7 @@ export default function Typed({ text }: any) {
   useEffect(() => {
     if (textref.current) {
       let i = 0;
-      let innertext = ""
+      let innertext = "";
       console.log(text);
       const listloop = setInterval(() => {
         listoftext.push(text.slice(0, i + 1));
