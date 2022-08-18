@@ -1,6 +1,6 @@
 @keyframes slideleft {
   0% {
-    transform: translateX(-100%) scale(20%);
+    transform: translateX(-50%) scale(20%);
     opacity: 0%;
   }
   100% {
