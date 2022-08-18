@@ -19,7 +19,7 @@ function Home() {
       {/* bg-[#1d1d1d] */}
       <div
         className="
-        bg-[url('/images/reverse.png')] bg-no-repeat bg-center bg-cover center bg-fixed backdrop-blur-lg h-screen pt-20"
+        min-h-screen bg-[url('/images/reverse.png')] bg-no-repeat bg-center bg-cover center bg-fixed backdrop-blur-lg pt-20"
       >
         <div className={styles.mainbody}>
           <div className="grid grid-cols-4">
@@ -44,7 +44,7 @@ function Home() {
                 </SlideLeft>
               </Delay>
               <div className="p-6"></div>
-              <Delay wait={600}>
+              <Delay wait={2000}>
                 <SlideRight>
                   <Box>
                     In my spare time, I run a small{" "}
@@ -60,12 +60,11 @@ function Home() {
                   </Box>
                 </SlideRight>
               </Delay>
-
               <div className="p-20"></div>
             </div>
             <div className="col-span-1"></div>
           </div>
-          <div className="bg-[#ffffff00] p-4 ">
+          {/* <div className="bg-[#ffffff00] p-4 ">
             <div
               style={{
                 backgroundRepeat: "repeat",
@@ -79,9 +78,9 @@ function Home() {
               }}
               className="p-12 text-4xl"
             >
-              {/* Technologies I use: */}
+              Technologies I use:
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </>
