@@ -1,3 +1,14 @@
 export default function Box({ children }: any) {
-  return <div style={{ boxShadow: "0.25rem 0.25rem #80A7FE"}} className="rounded-md">{children}</div>;
+  return (
+    <div
+      style={{
+        boxShadow: "-0.5rem -0.5rem #82dcf5, 0.5rem 0.5rem #966ac7",
+      }}
+      className="rounded-md"
+    >
+      <div className="p-4 rounded-sm bg-cover font-mono font-medium text-[#515d77]">
+        {children}
+      </div>
+    </div>
+  );
 }

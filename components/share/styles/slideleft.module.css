@@ -1,0 +1,16 @@
+@keyframes slideleft {
+  0% {
+    transform: translateX(-100%) scale(20%);
+    opacity: 0%;
+  }
+  100% {
+    transform: translateX(0%) scale(100%);
+    opacity: 100%;
+    size: 100%;
+  }
+}
+
+.left {
+  animation-name: slideleft;
+  animation-duration: 2s;
+}

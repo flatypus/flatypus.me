@@ -1,16 +1,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@200&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter&family=Roboto+Mono:wght@200&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital@1&family=Inter&family=Roboto+Mono:wght@200&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@200&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter&family=Roboto+Mono:wght@200&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Courier+Prime:ital@1&family=Inter&family=Roboto+Mono:wght@200&display=swap");
 
 html {
   background-color: #000;
-  color: #FFF;
-  font-family: 'Inter', sans-serif;
+  color: #fff;
+  font-family: "Inter", sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background-color: #3f3f3f;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #6a7073;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #80878a;
 }
 
 li {
-  font-family: 'Roboto Mono', monospace;
+  font-family: "Roboto Mono", monospace;
 }
