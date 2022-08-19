@@ -7,6 +7,21 @@ export default function Canvas() {
   const [canvasSize, setCanvasSize] = useState([]);
   const ss = 12;
   const bs = 2;
+  const makepoints = (radius) => {
+    const points = [];
+    for (let x = 0; x <= radius; x++) {
+      for (let y = 0; y <= radius; y++) {
+        if (x ** 2 + y ** 2 <= radius ** 2) {
+          points.push([x, y]);
+          points.push([-x, y]);
+          points.push([x, -y]);
+          points.push([-x, -y]);
+        }
+      }
+    }
+    return points;
+  };
+  const rpoints = makepoints(2);
 
   const findBox = (x, y, sx, sy) => {
     for (let j = 0; j < sy / ss; j++) {
@@ -24,12 +39,19 @@ export default function Canvas() {
     return false;
   };
 
-  const drawDot = (ctx, i, j) => {
-    ctx.fillRect(ss * i + bs, ss * j + bs, ss - bs * 2, ss - bs * 2);
-    ctx.fillRect(ss * (i + 1) + bs, ss * j + bs, ss - bs * 2, ss - bs * 2);
-    ctx.fillRect(ss * i + bs, ss * (j + 1) + bs, ss - bs * 2, ss - bs * 2);
-    ctx.fillRect(ss * (i - 1) + bs, ss * j + bs, ss - bs * 2, ss - bs * 2);
-    ctx.fillRect(ss * i + bs, ss * (j - 1) + bs, ss - bs * 2, ss - bs * 2);
+  const drawDot = (ctx, i, j, bs, fs) => {
+    for (let n in rpoints) {
+      let [dx, dy] = rpoints[n];
+      ctx.fillStyle = "#0c0c17";
+      ctx.fillRect(ss * (i+dx), ss * (j+dy), ss, ss);
+      ctx.fillStyle = fs;
+      ctx.fillRect(
+        ss * (i + dx) + bs,
+        ss * (j + dy) + bs,
+        ss - bs * 2,
+        ss - bs * 2
+      );
+    }
   };
 
   useEffect(() => {
@@ -81,16 +103,15 @@ export default function Canvas() {
       let tmp = stack;
       if (stack.length > 20) {
         let [i, j] = tmp.shift();
-        ctx.fillStyle = "#181a21";
-        drawDot(ctx, i, j);
+        drawDot(ctx, i, j, bs, "#181a21");
         setStack(tmp);
       }
       let res = findBox(x, y, sx, sy);
       if (res != false) {
         let [i, j] = res;
         if (stack[stack.length - 1] != [i, j]) {
-          ctx.fillStyle = "#0f1e3f";
-          drawDot(ctx, i, j);
+          // drawDot(ctx, i, j, bs+1, "#0f1e3f");
+          drawDot(ctx, i, j, bs-0.5, "#181a26");
           let tmp = stack;
           setStack([...tmp, [i, j]]);
         }
