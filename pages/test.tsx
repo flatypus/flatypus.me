@@ -5,8 +5,8 @@ export default function Canvas() {
   const [mousepos, setMousePos] = useState([]);
   const [stack, setStack] = useState([]);
   const [canvasSize, setCanvasSize] = useState([]);
-  const ss = 12;
-  const bs = 2;
+  const ss = 24;
+  const bs = 4;
   const makepoints = (radius) => {
     const points = [];
     for (let x = 0; x <= radius; x++) {
@@ -111,7 +111,7 @@ export default function Canvas() {
         let [i, j] = res;
         if (stack[stack.length - 1] != [i, j]) {
           // drawDot(ctx, i, j, bs+1, "#0f1e3f");
-          drawDot(ctx, i, j, bs-0.5, "#181a26");
+          drawDot(ctx, i, j, bs-0.8, "#181a26");
           let tmp = stack;
           setStack([...tmp, [i, j]]);
         }
