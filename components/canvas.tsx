@@ -63,43 +63,16 @@ export default function Canvas() {
     }
   };
 
-  const iteration = () => {
-    try {
-      const ctx = canvasRef.current.getContext("2d");
-      ctx.lineWidth = 2;
-      const [x, y] = mousepos;
-      const [sx, sy] = [
-        canvasRef.current.clientWidth,
-        canvasRef.current.clientHeight,
-      ];
-      //   if (canvasSize[0] != canvasRef.current.width && canvasSize[1]!=canvasRef.current.height){
-      //     setCanvasSize([canvasRef.current.width, canvasRef.current.height]);
-      //   }
-
-      //delete last item
-      let tmp = stack;
-      if (stack.length > trail) {
-        let [i, j] = tmp.shift();
-        drawDot(ctx, i, j, bs, "#181a21");
-        setStack(tmp);
+  const uniqueCount = (stack) => {
+    let counts = [];
+    for (let elem in stack) {
+      let [i, j] = stack[elem];
+      let count = counts.find((e) => e[0] == i && e[1] == j);
+      if (count == undefined) {
+        counts.push([i, j]);
       }
-      let res = findBox(x, y, sx, sy);
-      if (res != false) {
-        let [i, j] = res;
-        if (stack[stack.length - 1] != [i, j]) {
-          // drawDot(ctx, i, j, bs+1, "#0f1e3f");
-          let tmp = stack;
-          setStack([...tmp, [i, j]]);
-        }
-      }
-      for (let elem in stack) {
-        const [i, j] = stack[elem];
-        drawDot(ctx, i, j, bs, colarray[parseInt(elem)]);
-      }
-      setMousePos(jitter(mousepos));
-    } catch (err) {
-      console.log(err);
     }
+    return counts.length;
   };
 
   //start effect
@@ -137,8 +110,84 @@ export default function Canvas() {
   }, [canvasRef]);
 
   useEffect(() => {
-    iteration();
+    try {
+      const ctx = canvasRef.current.getContext("2d");
+      ctx.lineWidth = 2;
+      const [x, y] = mousepos;
+      const [sx, sy] = [
+        canvasRef.current.clientWidth,
+        canvasRef.current.clientHeight,
+      ];
+
+      //   if (canvasSize[0] != canvasRef.current.width && canvasSize[1]!=canvasRef.current.height){
+      //     setCanvasSize([canvasRef.current.width, canvasRef.current.height]);
+      //   }
+
+      //delete last item
+      let tmp = stack;
+      if (stack.length > trail) {
+        let [i, j] = tmp.shift();
+        drawDot(ctx, i, j, bs, "#181a21");
+        setStack(tmp);
+      }
+      let res = findBox(x, y, sx, sy);
+      if (res != false) {
+        let [i, j] = res;
+        if (stack[stack.length - 1] != [i, j]) {
+          // drawDot(ctx, i, j, bs+1, "#0f1e3f");
+          let tmp = stack;
+          setStack([...tmp, [i, j]]);
+        }
+      }
+      for (let elem in stack) {
+        const [i, j] = stack[elem];
+        drawDot(ctx, i, j, bs, colarray[parseInt(elem)]);
+      }
+
+      // if (uniqueCount(stack) > 3) {
+      //   setMousePos(jitter(mousepos));
+      // }
+    } catch (err) {
+      console.log(err);
+    }
   }, [mousepos]);
 
-  return <canvas ref={canvasRef} className="w-screen min-h-screen"></canvas>;
+  return (
+    <canvas
+      id="canvas"
+      ref={canvasRef}
+      className="w-screen min-h-screen"
+    ></canvas>
+  );
 }
+
+const Counter = () => {
+  // Use useRef for mutable variables that we want to persist
+  // without triggering a re-render on their change
+  const requestRef: any = useRef();
+  const canvasRef: any = useRef();
+  const previousTimeRef = useRef(null);
+
+  const animate = (time) => {
+    if (previousTimeRef.current != undefined) {
+      // Pass on a function to the setter of the state
+      // to make sure we always have the latest state\
+      // do the animation
+    }
+    previousTimeRef.current = time;
+    requestRef.current = requestAnimationFrame(animate);
+  };
+
+  useEffect(() => {
+    requestRef.current = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(requestRef.current);
+  }, []); // Make sure the effect runs only once
+
+  return (
+    <canvas
+      id="canvas"
+      ref={canvasRef}
+      className="w-screen min-h-screen"
+    ></canvas>
+  );
+};
