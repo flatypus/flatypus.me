@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from "react";
+import { generateColor } from "../lib/gradient";
 
 export default function Canvas() {
   const canvasRef = useRef(null);
@@ -7,6 +8,8 @@ export default function Canvas() {
   const [canvasSize, setCanvasSize] = useState([]);
   const ss = 24;
   const bs = 4;
+  const trail = 80;
+  const colarray = generateColor("0f1e3f", "6C7FF5", trail);
   const makepoints = (radius) => {
     const points = [];
     for (let x = 0; x <= radius; x++) {
@@ -43,8 +46,8 @@ export default function Canvas() {
     for (let n in rpoints) {
       let [dx, dy] = rpoints[n];
       ctx.fillStyle = "#0c0c17";
-      ctx.fillRect(ss * (i+dx), ss * (j+dy), ss, ss);
-      ctx.fillStyle = fs;
+      ctx.fillRect(ss * (i + dx), ss * (j + dy), ss, ss);
+      ctx.fillStyle = fs.indexOf("#") !== -1 ? fs : "#" + fs;
       ctx.fillRect(
         ss * (i + dx) + bs,
         ss * (j + dy) + bs,
@@ -100,8 +103,10 @@ export default function Canvas() {
       //   if (canvasSize[0] != canvasRef.current.width && canvasSize[1]!=canvasRef.current.height){
       //     setCanvasSize([canvasRef.current.width, canvasRef.current.height]);
       //   }
+
+      //delete last item
       let tmp = stack;
-      if (stack.length > 20) {
+      if (stack.length > trail) {
         let [i, j] = tmp.shift();
         drawDot(ctx, i, j, bs, "#181a21");
         setStack(tmp);
@@ -111,10 +116,13 @@ export default function Canvas() {
         let [i, j] = res;
         if (stack[stack.length - 1] != [i, j]) {
           // drawDot(ctx, i, j, bs+1, "#0f1e3f");
-          drawDot(ctx, i, j, bs-0.8, "#181a26");
           let tmp = stack;
           setStack([...tmp, [i, j]]);
         }
+      }
+      for (let elem in stack) {
+        const [i, j] = stack[elem];
+        drawDot(ctx, i, j, bs, colarray[parseInt(elem)]);
       }
     } catch (err) {
       console.log(err);

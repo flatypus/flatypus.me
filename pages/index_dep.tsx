@@ -1,13 +1,13 @@
 import Head from "next/head";
 import {} from "react-icons/si";
-import Box from "../components/share/box";
+import Box from "../components/box";
 import React, { useEffect, useState } from "react";
-import Typed from "../components/share/typed";
-import HorBar from "../components/share/horbar";
-import styles from "../components/share/styles/main.module.css";
-import SlideLeft from "../components/share/slideleft";
-import SlideRight from "../components/share/slideright";
-import Delay from "../components/share/delay";
+import Typed from "../components/typed";
+import HorBar from "../components/horbar";
+import styles from "../components/styles/main.module.css";
+import SlideLeft from "../components/slideleft";
+import SlideRight from "../components/slideright";
+import Delay from "../components/delay";
 import Canvas from "./test";
 
 function Home() {
@@ -28,7 +28,9 @@ function Home() {
         className="
         min-h-screen"
       >
-        <div className="fixed"><Canvas/></div>
+        <div className="fixed">
+          <Canvas />
+        </div>
         <div className="w-full min-h-screen absolute top-0 left-0 z-10">
           {/* <div className="md:bg-green-500 sm:bg-red-500 lg:bg-blue-500">
             Breakpoint tester
@@ -84,23 +86,6 @@ function Home() {
             </div>
             <div className="col-span-1"></div>
           </div>
-          {/* <div className="bg-[#ffffff00] p-4 ">
-            <div
-              style={{
-                backgroundRepeat: "repeat",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                fontWeight: "bold",
-                textTransform: "uppercase",
-                WebkitFontSmoothing: "antialiased",
-                WebkitTextStrokeWidth: "0.5px",
-                WebkitTextStrokeColor: "white",
-              }}
-              className="p-12 text-4xl"
-            >
-              Technologies I use:
-            </div>
-          </div> */}
         </div>
       </div>
     </>
