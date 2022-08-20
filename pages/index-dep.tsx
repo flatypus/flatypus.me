@@ -1,14 +1,15 @@
 import Head from "next/head";
 import {} from "react-icons/si";
 import Box from "../components/box";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Typed from "../components/typed";
 import HorBar from "../components/horbar";
 import styles from "../components/styles/main.module.css";
 import SlideLeft from "../components/slideleft";
 import SlideRight from "../components/slideright";
 import Delay from "../components/delay";
-import Canvas from "../components/canvas";
+import Appear from "../components/appear";
+import NavBar from "../components/navbar";
 
 function Home() {
   //  hex codes:
@@ -26,20 +27,20 @@ function Home() {
       {/* bg-[#1d1d1d] */}
       <div
         className="
-        min-h-screen"
+        min-h-screen bg-[url('/images/reverse.png')] bg-no-repeat bg-center bg-cover center bg-fixed backdrop-blur-lg"
       >
-        <div className="fixed">
-          <Canvas />
-        </div>
-        <div className="w-full min-h-screen absolute top-0 left-0 z-10">
+        <NavBar />
+        <div className={styles.mainbody}>
           {/* <div className="md:bg-green-500 sm:bg-red-500 lg:bg-blue-500">
             Breakpoint tester
           </div> */}
           <div className="grid px-20 md:px-40 lg:px-0 lg:grid-cols-4">
-            <div className="relative col-span-1"></div>
-            <div className="col-span-2 text-2xl pt-20">
+            <div className="col-span-1" />
+            <div className="col-span-2 text-2xl">
               <div className="text-5xl font-mono font-medium">
-                <Typed text={"Hello, I'm Hinson."}></Typed>
+                <Appear>
+                  <Typed text={"Hello, I'm Hinson."}></Typed>
+                </Appear>
                 <div className="mt-10" />
               </div>
               <Delay wait={100}>
@@ -48,7 +49,7 @@ function Home() {
                     I&apos;m a 15 year old{" "}
                     <a
                       href="https://media.gettyimages.com/photos/male-chimpanzee-in-business-clothes-picture-id169937774?s=612x612"
-                      className="text-[#95ff80]"
+                      className="text-[#95ff80] hover:underline"
                     >
                       full-stack web developer
                     </a>{" "}
@@ -77,8 +78,8 @@ function Home() {
                       {" "}
                       engineering YouTube channel{" "}
                     </a>{" "}
-                    where I share my projects. I&apos;m currently (trying) to learn
-                    Next.js, Rust, and Firebase.
+                    where I share my projects. I&apos;m currently (trying) to
+                    learn Next.js, Rust, and Firebase.
                   </Box>
                 </SlideRight>
               </Delay>
