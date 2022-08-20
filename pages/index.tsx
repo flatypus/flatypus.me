@@ -53,7 +53,7 @@ function Home() {
                     >
                       full-stack web developer
                     </a>{" "}
-                    based in Vancouver, Canada. Currently, I'm working as a
+                    based in Vancouver, Canada. Currently, I&apos;m working as a
                     Software Engineer at{" "}
                     <a
                       className="text-[#a669f5] hover:underline"
@@ -78,8 +78,8 @@ function Home() {
                       {" "}
                       engineering YouTube channel{" "}
                     </a>{" "}
-                    where I share my projects. I'm currently (trying) to learn
-                    Next.js, Rust, and Firebase.
+                    where I share my projects. I&apos;m currently (trying) to
+                    learn Next.js, Rust, and Firebase.
                   </Box>
                 </SlideRight>
               </Delay>
@@ -87,23 +87,6 @@ function Home() {
             </div>
             <div className="col-span-1"></div>
           </div>
-          {/* <div className="bg-[#ffffff00] p-4 ">
-            <div
-              style={{
-                backgroundRepeat: "repeat",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                fontWeight: "bold",
-                textTransform: "uppercase",
-                WebkitFontSmoothing: "antialiased",
-                WebkitTextStrokeWidth: "0.5px",
-                WebkitTextStrokeColor: "white",
-              }}
-              className="p-12 text-4xl"
-            >
-              Technologies I use:
-            </div>
-          </div> */}
         </div>
       </div>
     </>
