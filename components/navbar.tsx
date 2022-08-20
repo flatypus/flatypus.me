@@ -1,4 +1,4 @@
-import styles from "./stylesimage.png/main.module.css";
+import styles from "./styles/main.module.css";
 
 export default function NavBar() {
   return (
