@@ -60,3 +60,7 @@
   animation-name: slideright;
   animation-duration: 2s;
 }
+
+.circle {
+  clip-path: polygon(100% 100%, 100% 100%, 100% 100%);
+}

@@ -9,6 +9,7 @@ import SlideLeft from "../components/slideleft";
 import SlideRight from "../components/slideright";
 import Delay from "../components/delay";
 import Appear from "../components/appear";
+import NavBar from "../components/navbar";
 
 function Home() {
   //  hex codes:
@@ -26,8 +27,9 @@ function Home() {
       {/* bg-[#1d1d1d] */}
       <div
         className="
-        min-h-screen bg-[url('/images/reverse.png')] bg-no-repeat bg-center bg-cover center bg-fixed backdrop-blur-lg pt-20"
+        min-h-screen bg-[url('/images/reverse.png')] bg-no-repeat bg-center bg-cover center bg-fixed backdrop-blur-lg"
       >
+        <NavBar />
         <div className={styles.mainbody}>
           {/* <div className="md:bg-green-500 sm:bg-red-500 lg:bg-blue-500">
             Breakpoint tester
