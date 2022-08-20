@@ -5,7 +5,6 @@ export default function Canvas() {
   const canvasRef = useRef(null);
   const [mousepos, setMousePos] = useState([]);
   const [stack, setStack] = useState([]);
-  const [canvasSize, setCanvasSize] = useState([]);
   const ss = 24;
   const bs = 3;
   const trail = 80;
@@ -25,6 +24,13 @@ export default function Canvas() {
     return points;
   };
   const rpoints = makepoints(2);
+
+  const jitter = (pos) => {
+    const [x, y] = pos;
+    const r = (Math.random() * ss) / 10;
+    const theta = Math.random() * Math.PI * 2;
+    return [x + r * Math.cos(theta), y + r * Math.sin(theta)];
+  };
 
   const findBox = (x, y, sx, sy) => {
     for (let j = 0; j < sy / ss; j++) {
@@ -57,41 +63,7 @@ export default function Canvas() {
     }
   };
 
-  useEffect(() => {
-    canvasRef.current.width = canvasRef.current.clientWidth;
-    canvasRef.current.height = canvasRef.current.clientHeight;
-
-    const handleWindowMouseMove = (event) => {
-      const canvas = canvasRef.current;
-      var rect = canvas.getBoundingClientRect();
-      setMousePos([
-        (canvas.width * (event.clientX - rect.left)) / rect.width,
-        (canvas.height * (event.clientY - rect.top)) / rect.height,
-      ]);
-    };
-
-    window.addEventListener("mousemove", handleWindowMouseMove);
-    try {
-      const ctx = canvasRef.current.getContext("2d");
-      const [sx, sy] = [
-        canvasRef.current.clientWidth,
-        canvasRef.current.clientHeight,
-      ];
-      ctx.lineWidth = 2;
-
-      for (let j = 0; j < sy / ss; j++) {
-        for (let i = 0; i < sx / ss; i++) {
-          ctx.fillStyle = "#0c0c17";
-          ctx.fillRect(ss * i, ss * j, ss, ss);
-          ctx.fillStyle = "#181a21";
-          ctx.fillRect(ss * i + bs, ss * j + bs, ss - bs * 2, ss - bs * 2);
-        }
-      }
-      console.log("done initial render");
-    } catch {}
-  }, [canvasRef, canvasSize]);
-
-  useEffect(() => {
+  const iteration = () => {
     try {
       const ctx = canvasRef.current.getContext("2d");
       ctx.lineWidth = 2;
@@ -124,31 +96,49 @@ export default function Canvas() {
         const [i, j] = stack[elem];
         drawDot(ctx, i, j, bs, colarray[parseInt(elem)]);
       }
+      setMousePos(jitter(mousepos));
     } catch (err) {
       console.log(err);
     }
+  };
+
+  //start effect
+  useEffect(() => {
+    canvasRef.current.width = canvasRef.current.clientWidth;
+    canvasRef.current.height = canvasRef.current.clientHeight;
+    const handleWindowMouseMove = (event) => {
+      const canvas = canvasRef.current;
+      var rect = canvas.getBoundingClientRect();
+      setMousePos([
+        (canvas.width * (event.clientX - rect.left)) / rect.width,
+        (canvas.height * (event.clientY - rect.top)) / rect.height,
+      ]);
+    };
+
+    window.addEventListener("mousemove", handleWindowMouseMove);
+    try {
+      const ctx = canvasRef.current.getContext("2d");
+      const [sx, sy] = [
+        canvasRef.current.clientWidth,
+        canvasRef.current.clientHeight,
+      ];
+      ctx.lineWidth = 2;
+
+      for (let j = 0; j < sy / ss; j++) {
+        for (let i = 0; i < sx / ss; i++) {
+          ctx.fillStyle = "#0c0c17";
+          ctx.fillRect(ss * i, ss * j, ss, ss);
+          ctx.fillStyle = "#181a21";
+          ctx.fillRect(ss * i + bs, ss * j + bs, ss - bs * 2, ss - bs * 2);
+        }
+      }
+      console.log("done initial render");
+    } catch {}
+  }, [canvasRef]);
+
+  useEffect(() => {
+    iteration();
   }, [mousepos]);
 
-  // const mp = (canvas, evt) => {
-  //   var rect = canvas.getBoundingClientRect();
-  //   return [
-  //     (canvas.width * (evt.clientX - rect.left)) / rect.width,
-  //     (canvas.height * (evt.clientY - rect.top)) / rect.height,
-  //   ];
-  // };
-
-  // const update = (e: any) => {
-  //   const mouse = mp(canvasRef.current, e);
-  //   setMousePos(mouse);
-  // };
-
-  return (
-    <canvas
-      ref={canvasRef}
-      // onMouseMove={(e) => {
-      //   update(e);
-      // }}
-      className="w-screen min-h-screen"
-    ></canvas>
-  );
+  return <canvas ref={canvasRef} className="w-screen min-h-screen"></canvas>;
 }
