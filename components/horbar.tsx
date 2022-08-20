@@ -1,5 +1,4 @@
-import { useEffect, useRef } from "react";
-import styles from "./styles/horbar.module.css";
+import styles from "./styles/main.module.css";
 
 export default function HorBar() {
   return (
