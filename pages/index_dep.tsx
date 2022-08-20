@@ -8,7 +8,7 @@ import styles from "../components/styles/main.module.css";
 import SlideLeft from "../components/slideleft";
 import SlideRight from "../components/slideright";
 import Delay from "../components/delay";
-import Canvas from "./test";
+import Canvas from "../components/canvas";
 
 function Home() {
   //  hex codes:

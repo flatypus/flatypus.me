@@ -7,9 +7,9 @@ export default function Canvas() {
   const [stack, setStack] = useState([]);
   const [canvasSize, setCanvasSize] = useState([]);
   const ss = 24;
-  const bs = 4;
+  const bs = 3;
   const trail = 80;
-  const colarray = generateColor("0f1e3f", "6C7FF5", trail);
+  const colarray = generateColor("0f1e3f", "603BFF", trail);
   const makepoints = (radius) => {
     const points = [];
     for (let x = 0; x <= radius; x++) {
