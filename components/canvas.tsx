@@ -9,10 +9,12 @@ export default function Canvas() {
   const previousTimeRef = useRef(null);
   const mousepos = useRef([]);
   const stack = useRef([]);
+  const particles = useRef([]);
+  // ss for square size, bs for border size, trail for length of trail, colarray for start and end color
   const ss = 16;
   const bs = 2;
   const trail = 20;
-  const colarray = generateColor("0f1e3f", "603BFF", trail).slice(1, trail);
+  const colarray = generateColor("0f1e3f", "603BFF", trail);
   const makepoints = (radius) => {
     const points = [];
     const push = (item) => {
@@ -33,8 +35,14 @@ export default function Canvas() {
     }
     return points;
   };
+  // defines size of the points
   const rpoints = makepoints(2.5);
 
+  const randrange = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
+
+  // checks if a given x,y is in a box
   const findBox = (x, y, sx, sy) => {
     for (let j = 0; j < sy / ss; j++) {
       for (let i = 0; i < sx / ss; i++) {
@@ -51,6 +59,7 @@ export default function Canvas() {
     return false;
   };
 
+  // draw a big dot, or really many points in rpoints that form a circle of defined size
   const drawDot = (ctx, i, j, bs, fs) => {
     try {
       for (let n in rpoints) {
@@ -69,6 +78,13 @@ export default function Canvas() {
     }
   };
 
+  // draw a singular point, used as a particle. Essentially drawDot but with dx,dy = 0,0 ie. a 1x1 dot
+  const drawPoint = (ctx, i, j, bs, fs) => {
+    ctx.fillStyle = fs.indexOf("#") !== -1 ? fs : "#" + fs;
+    ctx.fillRect(ss * i + bs, ss * j + bs, ss - bs * 2, ss - bs * 2);
+  };
+
+  // line drawing algorithm to smoothen fast mouse movement
   const bresenham = (x1, y1, x2, y2) => {
     let points = [];
     let dx = Math.abs(x2 - x1);
@@ -92,7 +108,8 @@ export default function Canvas() {
     return points;
   };
 
-  const drawthething = (mousepos) => {
+  // function to encapsulate all draw funcs
+  const drawAll = (mousepos) => {
     const ctx = canvasRef.current.getContext("2d");
     ctx.lineWidth = 2;
     const [x, y] = mousepos;
@@ -100,8 +117,7 @@ export default function Canvas() {
       canvasRef.current.clientWidth,
       canvasRef.current.clientHeight,
     ];
-
-    // delete last item
+    // delete last item from stack
     if (stack.current.length > trail) {
       let [i, j] = stack.current.shift();
       let [i2, j2] = stack.current[0];
@@ -121,14 +137,36 @@ export default function Canvas() {
         stack.current = [...stack.current, [i, j]];
       }
     }
+    // save all points for choosing particle
+    let allpoints = [];
+    // draw line
     for (let elem = 0; elem < stack.current.length - 1; elem++) {
       const [i, j] = stack.current[elem];
       const [i2, j2] = stack.current[elem + 1];
       const points = bresenham(i, j, i2, j2);
       for (let n in points) {
         let [x, y] = points[n];
-        drawDot(ctx, x, y, bs, colarray[elem]);
+        drawDot(ctx, x, y, bs, colarray[elem - 1]);
+        allpoints.push([x, y]);
       }
+    }
+    // add random particle around a random stack item
+    if (allpoints.length > 0) {
+      let [i, j] = allpoints[randrange(0, allpoints.length - 1)];
+      particles.current = [
+        ...particles.current,
+        [i + Math.floor(randrange(-3, 3)), j + Math.floor(randrange(-3, 3))],
+      ];
+    }
+    // delete last particle
+    if (particles.current.length > trail) {
+      let [i, j] = particles.current.shift();
+      drawPoint(ctx, i, j, bs, "#181a21");
+    }
+    // draw particles
+    for (let n in particles.current) {
+      let [i, j] = particles.current[n];
+      drawPoint(ctx, i, j, bs, colarray[n]);
     }
   };
 
@@ -137,12 +175,13 @@ export default function Canvas() {
       // Pass on a function to the setter of the state
       // to make sure we always have the latest state\
       // do the animation
-      drawthething(mousepos.current);
+      drawAll(mousepos.current);
     }
     previousTimeRef.current = time;
     requestRef.current = requestAnimationFrame(animate);
   };
 
+  // either page loaded or someone resized the window, let's redraw the grid
   const reset = () => {
     canvasRef.current.width = canvasRef.current.clientWidth;
     canvasRef.current.height = canvasRef.current.clientHeight;
@@ -160,10 +199,11 @@ export default function Canvas() {
         ctx.fillRect(ss * i + bs, ss * j + bs, ss - bs * 2, ss - bs * 2);
       }
     }
-    console.log("done initial render");
+    console.log("grid rerendered");
   };
 
   useEffect(() => {
+    // function to handle when mouse moves
     const handleWindowMouseMove = (event) => {
       const canvas = canvasRef.current;
       var rect = canvas.getBoundingClientRect();
@@ -173,8 +213,11 @@ export default function Canvas() {
       ];
     };
     try {
+      // initial grid load
       reset();
     } catch {}
+    // add listeners to watch when mouse moves and when window resizes for
+    // improved performance vs onMouseMove
     window.addEventListener("mousemove", handleWindowMouseMove);
     window.addEventListener("resize", reset);
     requestRef.current = requestAnimationFrame(animate);
