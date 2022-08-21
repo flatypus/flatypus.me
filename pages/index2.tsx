@@ -28,9 +28,14 @@ function Home() {
         className="
         min-h-screen"
       >
-        <div className="fixed">
-          <Canvas />
+        <div>
+          <div className="fixed">
+            <Canvas />
+          </div>
+          <div className="w-full min-h-screen absolute top-0 left-0 z-10 bg-[url('/images/reverse.png')] bg-no-repeat bg-center bg-cover center bg-fixed backdrop-blur-lg opacity-60">
+          </div>
         </div>
+
         <div className="w-full min-h-screen absolute top-0 left-0 z-20">
           {/* <div className="md:bg-green-500 sm:bg-red-500 lg:bg-blue-500">
             Breakpoint tester
