@@ -143,6 +143,26 @@ export default function Canvas() {
     requestRef.current = requestAnimationFrame(animate);
   };
 
+  const reset = () => {
+    canvasRef.current.width = canvasRef.current.clientWidth;
+    canvasRef.current.height = canvasRef.current.clientHeight;
+    const ctx = canvasRef.current.getContext("2d");
+    const [sx, sy] = [
+      canvasRef.current.clientWidth,
+      canvasRef.current.clientHeight,
+    ];
+    ctx.lineWidth = 2;
+    for (let j = 0; j < sy / ss; j++) {
+      for (let i = 0; i < sx / ss; i++) {
+        ctx.fillStyle = "#0c0c17";
+        ctx.fillRect(ss * i, ss * j, ss, ss);
+        ctx.fillStyle = "#181a21";
+        ctx.fillRect(ss * i + bs, ss * j + bs, ss - bs * 2, ss - bs * 2);
+      }
+    }
+    console.log("done initial render");
+  };
+
   useEffect(() => {
     const handleWindowMouseMove = (event) => {
       const canvas = canvasRef.current;
@@ -153,26 +173,10 @@ export default function Canvas() {
       ];
     };
     try {
-      canvasRef.current.width = canvasRef.current.clientWidth;
-      canvasRef.current.height = canvasRef.current.clientHeight;
-      const ctx = canvasRef.current.getContext("2d");
-      const [sx, sy] = [
-        canvasRef.current.clientWidth,
-        canvasRef.current.clientHeight,
-      ];
-      ctx.lineWidth = 2;
-
-      for (let j = 0; j < sy / ss; j++) {
-        for (let i = 0; i < sx / ss; i++) {
-          ctx.fillStyle = "#0c0c17";
-          ctx.fillRect(ss * i, ss * j, ss, ss);
-          ctx.fillStyle = "#181a21";
-          ctx.fillRect(ss * i + bs, ss * j + bs, ss - bs * 2, ss - bs * 2);
-        }
-      }
-      console.log("done initial render");
+      reset();
     } catch {}
     window.addEventListener("mousemove", handleWindowMouseMove);
+    window.addEventListener("resize", reset);
     requestRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(requestRef.current);
   }, []); // Make sure the effect runs only once
