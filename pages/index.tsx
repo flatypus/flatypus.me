@@ -48,7 +48,7 @@ function Home() {
                     I&apos;m a 15 year old{" "}
                     <a
                       href="https://media.gettyimages.com/photos/male-chimpanzee-in-business-clothes-picture-id169937774?s=612x612"
-                      className="text-[#95ff80]"
+                      className="text-[#95ff80] hover:underline"
                     >
                       full-stack web developer
                     </a>{" "}
@@ -74,8 +74,7 @@ function Home() {
                       className="text-[#ff6262] hover:underline"
                       href="https://www.youtube.com/flatypus"
                     >
-                      {" "}
-                      engineering YouTube channel{" "}
+                      engineering YouTube channel
                     </a>{" "}
                     where I share my projects. I&apos;m currently (trying) to
                     learn Next.js, Rust, and Firebase.

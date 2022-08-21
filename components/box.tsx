@@ -6,7 +6,7 @@ export default function Box({ children }: any) {
       }}
       className="rounded-md"
     >
-      <div className="p-4 rounded-lg bg-cover bg-[#00000083] font-mono font-medium text-[#66728d] drop-shadow-lg">
+      <div className="p-4 rounded-lg bg-cover bg-[#000000c0] font-mono font-medium text-[#66728d] drop-shadow-lg">
         {children}
       </div>
     </div>
