@@ -11,8 +11,8 @@ export default function Canvas() {
   const stack = useRef([]);
   const ss = 16;
   const bs = 2;
-  const trail = 40;
-  const colarray = generateColor("0f1e3f", "603BFF", trail).slice(1,trail)
+  const trail = 20;
+  const colarray = generateColor("0f1e3f", "603BFF", trail).slice(1, trail);
   const makepoints = (radius) => {
     const points = [];
     const push = (item) => {
@@ -56,8 +56,6 @@ export default function Canvas() {
       for (let n in rpoints) {
         let [dx, dy] = rpoints[n];
         [dx, dy] = [dx + 0, dy + 0];
-        // ctx.fillStyle = "#0c0c17";
-        // ctx.fillRect(ss * (i + dx), ss * (j + dy), ss, ss);
         ctx.fillStyle = fs.indexOf("#") !== -1 ? fs : "#" + fs;
         ctx.fillRect(
           ss * (i + dx) + bs,
@@ -71,6 +69,29 @@ export default function Canvas() {
     }
   };
 
+  const bresenham = (x1, y1, x2, y2) => {
+    let points = [];
+    let dx = Math.abs(x2 - x1);
+    let dy = Math.abs(y2 - y1);
+    let sx = x1 < x2 ? 1 : -1;
+    let sy = y1 < y2 ? 1 : -1;
+    let err = dx - dy;
+    while (true) {
+      points.push([x1, y1]);
+      if (x1 === x2 && y1 === y2) break;
+      let e2 = 2 * err;
+      if (e2 > -dy) {
+        err -= dy;
+        x1 += sx;
+      }
+      if (e2 < dx) {
+        err += dx;
+        y1 += sy;
+      }
+    }
+    return points;
+  };
+
   const drawthething = (mousepos) => {
     const ctx = canvasRef.current.getContext("2d");
     ctx.lineWidth = 2;
@@ -80,26 +101,34 @@ export default function Canvas() {
       canvasRef.current.clientHeight,
     ];
 
-    //   if (canvasSize[0] != canvasRef.current.width && canvasSize[1]!=canvasRef.current.height){
-    //     setCanvasSize([canvasRef.current.width, canvasRef.current.height]);
-    //   }
-
-    //delete last item
-
+    // delete last item
     if (stack.current.length > trail) {
       let [i, j] = stack.current.shift();
-      drawDot(ctx, i, j, bs, "#181a21");
+      let [i2, j2] = stack.current[0];
+      let points = bresenham(i, j, i2, j2);
+
+      for (let n in points) {
+        let [i, j] = points[n];
+        drawDot(ctx, i, j, bs, "#181a21");
+      }
     }
+    // check if mouse is on a square
     let res = findBox(x, y, sx, sy);
     if (res != false) {
       let [i, j] = res;
       if (stack.current[stack.current.length - 1] != [i, j]) {
+        // add to stack
         stack.current = [...stack.current, [i, j]];
       }
     }
-    for (let elem in stack.current) {
+    for (let elem = 0; elem < stack.current.length - 1; elem++) {
       const [i, j] = stack.current[elem];
-      drawDot(ctx, i, j, bs, colarray[parseInt(elem)]);
+      const [i2, j2] = stack.current[elem + 1];
+      const points = bresenham(i, j, i2, j2);
+      for (let n in points) {
+        let [x, y] = points[n];
+        drawDot(ctx, x, y, bs, colarray[elem]);
+      }
     }
   };
 
