@@ -12,7 +12,7 @@ export default function Canvas() {
   const particles = useRef([]);
   // ss for square size, bs for border size, trail for length of trail, colarray for start and end color
   const ss = 16;
-  const bs = 0;
+  const bs = 2;
   const trail = 20;
   const colarray = generateColor("0f1e3f", "603BFF", trail);
   const makepoints = (radius) => {

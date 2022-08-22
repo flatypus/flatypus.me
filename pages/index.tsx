@@ -19,6 +19,7 @@ function Home() {
   // 82DCF5
   // F9ECCC
   useEffect(() => {
+    // regex to detect if user is on phone or tablet
     let check = false;
     (function (a) {
       if (
@@ -50,7 +51,8 @@ function Home() {
               <div className="fixed">
                 <Canvas />
               </div>
-              <div className="w-full min-h-screen absolute top-0 left-0 z-10 bg-[url('/images/reverse.png')] bg-no-repeat bg-center bg-cover center bg-fixed backdrop-blur-lg opacity-60"></div>
+              {/* <div className="w-full min-h-screen absolute top-0 left-0 z-10 bg-[url('/images/reverse.png')] bg-no-repeat bg-center bg-cover center bg-fixed backdrop-blur-lg opacity-60"></div> */}
+              <div className="w-full min-h-screen absolute top-0 left-0 z-10 bg-[#00000065] bg-no-repeat bg-center bg-cover center bg-fixed]"></div>
             </div>
           ) : (
             <div className="min-h-screen bg-[url('/images/reverse.png')] bg-no-repeat bg-center bg-cover center bg-fixed backdrop-blur-lg"></div>
