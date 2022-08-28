@@ -48,14 +48,22 @@ function Home() {
         <div>
           {!isMobile ? (
             <div>
-              <div className="fixed">
-                <Canvas />
+              <div className="grid grid-cols-1">
+                <div className="row-start-1 col-start-1 fixed">
+                  <Canvas />
+                </div>
+                <div className="row-start-1 col-start-1 fixed">
+                  <div className="w-screen min-h-screen bg-[#00000065] bg-no-repeat bg-center bg-cover center bg-fixed]"></div>
+                </div>
               </div>
               {/* <div className="w-full min-h-screen absolute top-0 left-0 z-10 bg-[url('/images/reverse.png')] bg-no-repeat bg-center bg-cover center bg-fixed backdrop-blur-lg opacity-60"></div> */}
-              <div className="w-full min-h-screen absolute top-0 left-0 z-10 bg-[#00000065] bg-no-repeat bg-center bg-cover center bg-fixed]"></div>
             </div>
           ) : (
-            <div className="min-h-screen bg-[url('/images/reverse.png')] bg-no-repeat bg-center bg-cover center bg-fixed backdrop-blur-lg"></div>
+            <div className="grid grid-cols-1">
+              <div className="row-start-1 col-start-1 fixed">
+                <div className="w-screen min-h-screen bg-[url('/images/reverse.png')] bg-no-repeat bg-center bg-cover center bg-fixed backdrop-blur-lg"></div>
+              </div>
+            </div>
           )}
         </div>
         <div className="w-full min-h-screen absolute top-0 left-0 z-20">
