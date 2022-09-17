@@ -1,1 +1,1 @@
-This is basically like my porfolio I guess.
+This is basically like my portfolio I guess.
