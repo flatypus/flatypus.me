@@ -132,10 +132,7 @@ export default function Canvas() {
     let res = findBox(x, y, sx, sy);
     if (res != false) {
       let [i, j] = res;
-      if (stack.current[stack.current.length - 1] != [i, j]) {
-        // add to stack
-        stack.current = [...stack.current, [i, j]];
-      }
+      stack.current = [...stack.current, [i, j]];
     }
     // save all points for choosing particle
     let allpoints = [];
