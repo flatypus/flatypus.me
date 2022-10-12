@@ -1,5 +1,5 @@
 import Head from "next/head";
-import {} from "react-icons/si";
+import { } from "react-icons/si";
 import Box from "../components/box";
 import React, { useEffect, useState } from "react";
 import Typed from "../components/typed";
@@ -8,7 +8,8 @@ import styles from "../components/styles/main.module.css";
 import SlideLeft from "../components/slideleft";
 import SlideRight from "../components/slideright";
 import Delay from "../components/delay";
-import Canvas from "../components/canvas";
+import Canvas from "../components/canvas2";
+import Appear from "../components/appear";
 
 function Home() {
   const [isMobile, setIsMobile] = useState(true);
@@ -34,6 +35,40 @@ function Home() {
     })(navigator.userAgent || navigator.vendor);
     setIsMobile(check);
   }, []);
+
+  useEffect(() => {
+    const faders = document.querySelectorAll(".fade-in");
+    const sliders = document.querySelectorAll(".slide-in");
+
+    const appearOptions = {
+      threshold: 0,
+      rootMargin: "0px 0px -250px 0px"
+    };
+
+    const appearOnScroll = new IntersectionObserver(function (
+      entries,
+      appearOnScroll
+    ) {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) {
+          return;
+        } else {
+          entry.target.classList.add("appear");
+          appearOnScroll.unobserve(entry.target);
+        }
+      });
+    },
+      appearOptions);
+
+    faders.forEach(fader => {
+      appearOnScroll.observe(fader);
+    });
+
+    sliders.forEach(slider => {
+      appearOnScroll.observe(slider);
+    });
+  }, []);
+
   return (
     <>
       <Head>
@@ -53,7 +88,7 @@ function Home() {
                   <Canvas />
                 </div>
                 <div className="row-start-1 col-start-1 fixed">
-                  <div className="w-screen min-h-screen bg-[#00000065] bg-no-repeat bg-center bg-cover center bg-fixed]"></div>
+                  <div className="w-screen min-h-screen bg-[#00000065] bg-no-repeat bg-center bg-cover center bg-fixed"></div>
                 </div>
               </div>
               {/* <div className="w-full min-h-screen absolute top-0 left-0 z-10 bg-[url('/images/reverse.png')] bg-no-repeat bg-center bg-cover center bg-fixed backdrop-blur-lg opacity-60"></div> */}
@@ -77,46 +112,47 @@ function Home() {
                 <Typed text={"Hello, I'm Hinson."}></Typed>
                 <div className="mt-10" />
               </div>
-              <Delay wait={100}>
-                <SlideLeft>
-                  <Box>
-                    I&apos;m a 15 year old{" "}
-                    <a
-                      href="https://media.gettyimages.com/photos/male-chimpanzee-in-business-clothes-picture-id169937774?s=612x612"
-                      className="text-[#95ff80] hover:underline"
-                    >
-                      full-stack web developer
-                    </a>{" "}
-                    based in Vancouver, Canada. Currently, I&apos;m working as a
-                    Software Engineer at{" "}
-                    <a
-                      className="text-[#a669f5] hover:underline"
-                      href="https://www.edubeyond.org"
-                    >
-                      EduBeyond
-                    </a>
-                    , an international charity that provides education
-                    opportunities to children in developing countries.
-                  </Box>
-                </SlideLeft>
-              </Delay>
+              <Appear delay={100} x={-64}>
+                <Box>
+                  I&apos;m a 15 year old{" "}
+                  <a
+                    href="https://media.gettyimages.com/photos/male-chimpanzee-in-business-clothes-picture-id169937774?s=612x612"
+                    className="text-[#95ff80] hover:underline"
+                  >
+                    full-stack web developer
+                  </a>{" "}
+                  based in Vancouver, <br></br>Canada. Currently, I&apos;m working as a
+                  Software Engineer at{" "}
+                  <a
+                    className="text-[#a669f5] hover:underline"
+                    href="https://www.edubeyond.org"
+                  >
+                    EduBeyond
+                  </a>
+                  , <br></br>an international charity that provides education
+                  opportunities to children in developing countries.
+                </Box>
+              </Appear>
               <div className="p-6"></div>
-              <Delay wait={700}>
-                <SlideRight>
-                  <Box>
-                    In my spare time, I run a small{" "}
-                    <a
-                      className="text-[#ff6262] hover:underline"
-                      href="https://www.youtube.com/flatypus"
-                    >
-                      engineering YouTube channel
-                    </a>{" "}
-                    where I share my projects. I&apos;m currently (trying) to
-                    learn Next.js, Rust, and Firebase.
-                  </Box>
-                </SlideRight>
-              </Delay>
+              <Appear delay={100} x={64}>
+                <Box>
+                  In my spare time, I run a small{" "}
+                  <a
+                    className="text-[#ff6262] hover:underline"
+                    href="https://www.youtube.com/flatypus"
+                  >
+                    engineering YouTube channel
+                  </a>{" "}
+                  where I share my projects. I&apos;m currently (trying) to
+                  learn Next.js, Rust, and Firebase.
+                </Box>
+              </Appear>
               <div className="p-20"></div>
+              <div className="w-full border-b-2 border-l-2 rounded-lg p-2">
+                <div>Hello</div>
+                <div>Hello</div>
+                <div>Hello</div>
+              </div>
             </div>
             <div className="col-span-1"></div>
           </div>

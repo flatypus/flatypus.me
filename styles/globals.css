@@ -30,3 +30,53 @@ html {
 li {
   font-family: "Roboto Mono", monospace;
 }
+
+.circle {
+  clip-path: polygon(100% 100%, 100% 100%, 100% 100%);
+}
+
+@keyframes appear {
+  0% {
+    transform: translateY(40%);
+    opacity: 0%;
+  }
+  100% {
+    transform: translateY(0%);
+    opacity: 100%;
+  }
+}
+
+@keyframes slideleft {
+  0% {
+    transform: translateX(-50%) translateY(100%) scale(20%);
+    opacity: 0%;
+  }
+  100% {
+    transform: translateX(0%) translateY(0%) scale(100%);
+    opacity: 100%;
+  }
+}
+@keyframes slideright {
+  0% {
+    transform: translateX(50%) translateY(100%) scale(20%);
+    opacity: 0%;
+  }
+  100% {
+    transform: translateX(0%) translateY(0%) scale(100%);
+    opacity: 100%;
+  }
+}
+
+.fade-in.appear {
+  animation-name: appear;
+  animation-duration: 0.5s;
+}
+
+.from-left.appear {
+  animation-name: slideleft;
+  animation-duration: 2s;
+}
+.from-right.appear {
+  animation-name: slideright;
+  animation-duration: 2s;
+}
