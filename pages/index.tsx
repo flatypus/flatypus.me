@@ -112,7 +112,7 @@ function Home() {
                 <Typed text={"Hello, I'm Hinson."}></Typed>
                 <div className="mt-10" />
               </div>
-              <Appear delay={100} x={-64}>
+              <Appear delay={100} enterTo={"translate-x-0 opacity-100 fade-in from-left"}>
                 <Box>
                   I&apos;m a 15 year old{" "}
                   <a
@@ -134,7 +134,7 @@ function Home() {
                 </Box>
               </Appear>
               <div className="p-6"></div>
-              <Appear delay={100} x={64}>
+              <Appear delay={100} enterTo={"translate-x-0 opacity-100 fade-in from-right"}>
                 <Box>
                   In my spare time, I run a small{" "}
                   <a
