@@ -11,6 +11,7 @@ export default function Appear({ children, delay = 0, enterTo = "translate-x-0 o
     useEffect(() => {
         setTimeout(() => {
             setShow(true)
+            // delays 100ms to prevent flicker
         }, 100)
     }, [])
     return (
@@ -22,10 +23,10 @@ export default function Appear({ children, delay = 0, enterTo = "translate-x-0 o
                     leave={`transition-opacity duration-[${duration}ms]`}
                     leaveFrom={`translate-x-0 opacity-100`}
                     leaveTo={`translate-x-0 opacity-100`}>
-                    <div className={!show ? "opacity-0" : ""}>{children}</div>
+                    <div className={!show ? "hidden" : ""}>{children}</div>
                 </Transition.Child>
             </Transition>
-            <div ref={ref}></div>
+            <div ref={ref}>{!show ? <div className='opacity-0'>{children}</div> : null}</div>
         </>
     )
 }
