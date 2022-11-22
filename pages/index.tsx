@@ -95,7 +95,7 @@ function Home() {
                     >
                       EduBeyond
                     </a>
-                    , an international charity that provides education
+                    , an international ed-tech start-up that provides education
                     opportunities to children in developing countries.
                   </Box>
                 </SlideLeft>
