@@ -6,7 +6,10 @@ export default function ChristmasCanvas({ mockImage }: any) {
   const [canvasx, canvasy] = [960, 960];
   const canvas = useRef(null);
   const [inputColor, setInputColor] = useState("");
-  const socket = useMemo(() => Socket("https://christmassocket.flatypus.me"), []);
+  const socket = useMemo(
+    () => Socket("https://christmassocket.flatypus.me"),
+    []
+  );
 
   // socket.on("connect", () => {
   //   console.log("connected");
@@ -14,12 +17,13 @@ export default function ChristmasCanvas({ mockImage }: any) {
   // socket.on("disconnect", () => {
   //   console.log("disconnected");
   // });
+  const drawPixel = (x: number, y: number, color: string) => {
+    const canvasRef = canvas.current;
+    const ctx = canvasRef.getContext("2d");
+    ctx.fillStyle = color;
+    ctx.fillRect(10 * x, 10 * y, 10, 10);
+  };
 
-  //   useEffect(() => {
-  //     console.log(inputColor);
-  //   }, [inputColor]);
-
-  // create an r/place canvas
   useEffect(() => {
     const canvasRef = canvas.current;
     const ctx = canvasRef.getContext("2d");
@@ -31,26 +35,21 @@ export default function ChristmasCanvas({ mockImage }: any) {
       console.log(data);
       const canvasRef = canvas.current;
       const ctx = canvasRef.getContext("2d");
-      mockImage.current.onLoad(() => {
-        ctx.drawImage(mockImage.current, 0, 0, canvasx, canvasy);
-        for (const loc in data) {
-          const { x, y } = JSON.parse(loc);
-          ctx.fillStyle = data[loc];
-          ctx.fillRect(10 * x, 10 * y, 10, 10);
-        }
-      });
+      ctx.drawImage(mockImage.current, 0, 0, canvasx, canvasy);
+      for (const loc in data) {
+        const { x, y } = JSON.parse(loc);
+        drawPixel(x, y, data[loc]);
+      }
     });
   }, []);
 
   useEffect(() => {
     const canvasRef = canvas.current;
-    const ctx = canvasRef.getContext("2d");
     canvasRef.addEventListener("click", (e) => {
-      const x = Math.round((canvasx / 10) * (e.offsetX / canvasx));
-      const y = Math.round((canvasy / 10) * (e.offsetY / canvasy));
-      // ctx.fillStyle = inputColor;
-      // ctx.fillRect(10 * x, 10 * y, 10, 10);
+      const x = Math.floor(e.offsetX / 10);
+      const y = Math.floor(e.offsetY / 10);
       setInputColor((inputColor) => {
+        drawPixel(x, y, inputColor);
         socket.emit("pixelsend", { x, y, color: inputColor });
         return inputColor;
       });
@@ -59,10 +58,7 @@ export default function ChristmasCanvas({ mockImage }: any) {
 
   useEffect(() => {
     socket.on("pixelupdate", (data) => {
-      const canvasRef = canvas.current;
-      const ctx = canvasRef.getContext("2d");
-      ctx.fillStyle = data.color;
-      ctx.fillRect(10 * data.x, 10 * data.y, 10, 10);
+      drawPixel(data.x, data.y, data.color);
     });
   }, []);
 
@@ -71,7 +67,11 @@ export default function ChristmasCanvas({ mockImage }: any) {
     <>
       <div className="flex flex-row gap-20">
         <canvas ref={canvas} id="canvas" />
-        <ColorPicker color={"#FF0000"} inputColor={inputColor} setInputColor={setInputColor} />
+        <ColorPicker
+          color={"#FF0000"}
+          inputColor={inputColor}
+          setInputColor={setInputColor}
+        />
       </div>
     </>
   );

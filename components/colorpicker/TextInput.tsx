@@ -28,7 +28,7 @@ export default function TextInput({
       <label className="Input__label">{label}</label>
       <input
         type="text"
-        className="Input__input"
+          className="Input__input text-[#000000]"
         placeholder={placeholder}
         value={value}
         onChange={(e) => {
