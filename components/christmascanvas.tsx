@@ -35,7 +35,7 @@ export default function ChristmasCanvas({ mockImage }: any) {
       console.log(data);
       const canvasRef = canvas.current;
       const ctx = canvasRef.getContext("2d");
-      ctx.drawImage(mockImage.current, 0, 0, canvasx, canvasy);
+      ctx.drawImage(mockImage.current, 0, 40, canvasx, canvasy);
       for (const loc in data) {
         const { x, y } = JSON.parse(loc);
         drawPixel(x, y, data[loc]);
