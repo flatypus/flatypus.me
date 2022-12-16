@@ -46,12 +46,7 @@ export default function Canvas() {
   const findBox = (x, y, sx, sy) => {
     for (let j = 0; j < sy / ss; j++) {
       for (let i = 0; i < sx / ss; i++) {
-        if (
-          x >= ss * i &&
-          x <= ss * i + ss &&
-          y >= ss * j &&
-          y <= ss * j + ss
-        ) {
+        if (x >= ss * i && x <= ss * i + ss && y >= ss * j && y <= ss * j + ss) {
           return [i, j];
         }
       }
@@ -66,12 +61,7 @@ export default function Canvas() {
         let [dx, dy] = rpoints[n];
         [dx, dy] = [dx + 0, dy + 0];
         ctx.fillStyle = fs.indexOf("#") !== -1 ? fs : "#" + fs;
-        ctx.fillRect(
-          ss * (i + dx) + bs,
-          ss * (j + dy) + bs,
-          ss - bs * 2,
-          ss - bs * 2
-        );
+        ctx.fillRect(ss * (i + dx) + bs, ss * (j + dy) + bs, ss - bs * 2, ss - bs * 2);
       }
     } catch {
       // console.log(ctx,i,j,bs,fs)
@@ -113,10 +103,7 @@ export default function Canvas() {
     const ctx = canvasRef.current.getContext("2d");
     ctx.lineWidth = 2;
     const [x, y] = mousepos;
-    const [sx, sy] = [
-      canvasRef.current.clientWidth,
-      canvasRef.current.clientHeight,
-    ];
+    const [sx, sy] = [canvasRef.current.clientWidth, canvasRef.current.clientHeight];
     // delete last item from stack
     if (stack.current.length > trail) {
       let [i, j] = stack.current.shift();
@@ -150,10 +137,7 @@ export default function Canvas() {
     // add random particle around a random stack item
     if (allpoints.length > 0) {
       let [i, j] = allpoints[randrange(0, allpoints.length - 1)];
-      particles.current = [
-        ...particles.current,
-        [i + Math.floor(randrange(-3, 3)), j + Math.floor(randrange(-3, 3))],
-      ];
+      particles.current = [...particles.current, [i + Math.floor(randrange(-3, 3)), j + Math.floor(randrange(-3, 3))]];
     }
     // delete last particle
     if (particles.current.length > trail) {
@@ -183,10 +167,7 @@ export default function Canvas() {
     canvasRef.current.width = canvasRef.current.clientWidth;
     canvasRef.current.height = canvasRef.current.clientHeight;
     const ctx = canvasRef.current.getContext("2d");
-    const [sx, sy] = [
-      canvasRef.current.clientWidth,
-      canvasRef.current.clientHeight,
-    ];
+    const [sx, sy] = [canvasRef.current.clientWidth, canvasRef.current.clientHeight];
     ctx.lineWidth = 2;
     for (let j = 0; j < sy / ss; j++) {
       for (let i = 0; i < sx / ss; i++) {
@@ -221,11 +202,9 @@ export default function Canvas() {
     return () => cancelAnimationFrame(requestRef.current);
   }, []); // Make sure the effect runs only once
 
-  return (
-    <canvas
-      id="canvas"
-      ref={canvasRef}
-      className="w-screen min-h-screen"
-    ></canvas>
-  );
+  // image-rendering: pixelated;
+  // image-rendering: crisp-edges;
+  // image-rendering: -moz-crisp-edges;
+  // image-rendering: -webkit-optimize-contrast;
+  return <canvas id="canvas" ref={canvasRef} className="w-screen min-h-screen"></canvas>;
 }
